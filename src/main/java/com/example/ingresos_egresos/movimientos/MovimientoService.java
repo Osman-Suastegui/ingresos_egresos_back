@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -67,8 +68,23 @@ public class MovimientoService {
 
     }
 
-//    public List<GetMovimientoReq> getMovimientos(Date fechaInicio, Date fechaFinal){
-//        List<Movimiento> movs = movimientoRepository.findByFechaBetween(fechaFinal,fechaFinal);
-//
-//    }
+    public ResponseEntity<List<GetMovimientoReq>> getMovimientos(Date fechaInicio, Date fechaFinal) {
+        List<Movimiento> movs = movimientoRepository.findByFechaBetween(fechaInicio, fechaFinal);
+        List<GetMovimientoReq> getMovs = new ArrayList<>();
+        for (Movimiento mov : movs) {
+            GetMovimientoReq getMov = new GetMovimientoReq();
+            getMov.setMotivo(mov.getMotivo());
+            getMov.setTipoMovimiento(mov.getTipoMovimiento());
+            getMov.setConcepto(mov.getConcepto());
+            getMov.setUsername(mov.getUser().getUsername());
+            getMov.setImporte(mov.getImporte());
+            getMov.setFecha(mov.getFecha());
+            getMov.setPersona(mov.getPersona());
+            getMov.setClasificacion(mov.getClasificacion().getNombre());
+            getMov.setIdClasificacion(mov.getClasificacion().getId());
+            getMovs.add(getMov);
+        }
+        return ResponseEntity.ok(getMovs);
+    }
+
 }
