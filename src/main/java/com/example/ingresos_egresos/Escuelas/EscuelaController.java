@@ -17,9 +17,10 @@ public class EscuelaController {
 
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/addEscuela")
-    public ResponseEntity addEscuela(@RequestBody AddEscuelaReq req) {
+    public void addEscuela(@RequestBody AddEscuelaReq req) {
         escuelaService.addEscuela(req);
-        return ResponseEntity.ok("sucess");
+
+
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
