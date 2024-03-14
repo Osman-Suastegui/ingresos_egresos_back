@@ -16,4 +16,8 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Object> handleInvalidCredentials(InvalidCredentialsException ex) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponse("Credenciales Incorrectas"));
     }
+    @ExceptionHandler(MovimientoNotFoundException.class)
+    public ResponseEntity<Object> handleMovimientoNotFound(MovimientoNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse("Movimiento no encontrado"));
+    }
 }

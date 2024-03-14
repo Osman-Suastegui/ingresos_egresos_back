@@ -4,6 +4,7 @@ import com.example.ingresos_egresos.Clasificaciones.Clasificacion;
 import com.example.ingresos_egresos.Clasificaciones.ClasificacionRepository;
 import com.example.ingresos_egresos.Escuelas.Escuela;
 import com.example.ingresos_egresos.Escuelas.EscuelaRepository;
+import com.example.ingresos_egresos.HandleErrors.MovimientoNotFoundException;
 import com.example.ingresos_egresos.users.User;
 import com.example.ingresos_egresos.users.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -50,9 +51,10 @@ public class MovimientoService {
     public void updateMovimiento(Movimiento movimiento) {
     }
 
-    public ResponseEntity<GetMovimientoReq> getMovimiento(Long idMovimiento) {
-        Optional<Movimiento> mov = movimientoRepository.findById(idMovimiento);
-        Movimiento movimiento = mov.get();
+    public ResponseEntity<GetMovimientoReq> getMovimiento(Long idMovimiento, Long idEscuela) {
+        Movimiento mov = movimientoRepository.findByIdAndAndEscuelaId(idMovimiento, idEscuela);
+        if(mov == null) throw new MovimientoNotFoundException("Movimiento no encontrado");
+        Movimiento movimiento = mov;
         GetMovimientoReq  getMovReq = new GetMovimientoReq();
 
         getMovReq.setMotivo(movimiento.getMotivo());

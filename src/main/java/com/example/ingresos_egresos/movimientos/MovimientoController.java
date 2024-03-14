@@ -28,8 +28,8 @@ public class MovimientoController {
     @CrossOrigin(origins = "http://localhost:4200")
 
     @GetMapping("/getMovimiento")
-    public ResponseEntity<GetMovimientoReq> getMovimiento(@RequestParam("idMovimiento") Long idMovimiento) {
-        return movimientoService.getMovimiento(idMovimiento);
+    public ResponseEntity<GetMovimientoReq> getMovimiento(@RequestParam("idMovimiento") Long idMovimiento,@RequestParam("idEscuela") Long idEscuela) {
+        return movimientoService.getMovimiento(idMovimiento,idEscuela);
     }
 
 
