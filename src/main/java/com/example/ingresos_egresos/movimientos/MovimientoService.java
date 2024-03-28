@@ -70,8 +70,8 @@ public class MovimientoService {
 
     }
 
-    public ResponseEntity<List<GetMovimientoReq>> getMovimientos(Date fechaInicio, Date fechaFinal) {
-        List<Movimiento> movs = movimientoRepository.findByFechaBetween(fechaInicio, fechaFinal);
+    public ResponseEntity<List<GetMovimientoReq>> getMovimientos(Date fechaInicio, Date fechaFinal,Long idEscuela) {
+        List<Movimiento> movs = movimientoRepository.findByFechaBetweenAndEscuelaId(fechaInicio, fechaFinal,idEscuela);
         List<GetMovimientoReq> getMovs = new ArrayList<>();
         for (Movimiento mov : movs) {
             GetMovimientoReq getMov = new GetMovimientoReq();

@@ -38,14 +38,15 @@ public class MovimientoController {
     @GetMapping("/getMovimientosByFechas")
     public ResponseEntity<List<GetMovimientoReq>> getMovimientos(
             @RequestParam("fechaInicio") @DateTimeFormat(pattern = "yyyy-MM-dd") String fechaInicioStr,
-            @RequestParam("fechaFinal") @DateTimeFormat(pattern = "yyyy-MM-dd") String fechaFinalStr
+            @RequestParam("fechaFinal") @DateTimeFormat(pattern = "yyyy-MM-dd") String fechaFinalStr,
+            @RequestParam("idEscuela") Long idEscuela
     ) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         try {
             Date fechaInicio = dateFormat.parse(fechaInicioStr);
             Date fechaFinal = dateFormat.parse(fechaFinalStr);
 
-             return movimientoService.getMovimientos(fechaInicio, fechaFinal);
+             return movimientoService.getMovimientos(fechaInicio, fechaFinal,idEscuela);
 
 
         } catch (ParseException e) {
