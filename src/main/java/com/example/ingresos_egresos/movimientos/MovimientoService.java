@@ -89,4 +89,32 @@ public class MovimientoService {
         return ResponseEntity.ok(getMovs);
     }
 
+    //metodo para obtener los movimientos de ingresos y egresos de una escuela entre dos rangos de fechas
+
+    public ResponseEntity<GetReport> getReport(Date fechaInicio, Date fechaFinal,Long idEscuela) {
+        List<Movimiento> movs = movimientoRepository.findByFechaBetweenAndEscuelaId(fechaInicio, fechaFinal, idEscuela);
+        //obten los ingresos y egresos de esos movs
+        double ingresos = 0;
+        double egresos = 0;
+        for (Movimiento mov : movs) {
+            if (mov.getTipoMovimiento().equals(TipoDeMovimiento.INGRESO)) {
+                ingresos += mov.getImporte();
+            } else {
+                egresos += mov.getImporte();
+            }
+        }
+        GetReport report = new GetReport();
+
+        report.setIngresos(ingresos);
+        report.setEgresos(egresos);
+        Optional<Escuela> esc = escuelaRepository.findById(idEscuela);
+        report.setNombre(esc.get().getNombre());
+        report.setClave(esc.get().getClave());
+        report.setSector(esc.get().getSector());
+        report.setZona(esc.get().getZona());
+        report.setLocalidad(esc.get().getLocalidad());
+
+        return ResponseEntity.ok(report);
+    }
+
 }

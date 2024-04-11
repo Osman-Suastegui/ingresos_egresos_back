@@ -56,4 +56,29 @@ public class MovimientoController {
         }
     }
 
+
+
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/generateReport")
+    public ResponseEntity<GetReport> getReport(
+            @RequestParam("fechaInicio") @DateTimeFormat(pattern = "yyyy-MM-dd") String fechaInicioStr,
+            @RequestParam("fechaFinal") @DateTimeFormat(pattern = "yyyy-MM-dd") String fechaFinalStr,
+            @RequestParam("idEscuela") Long idEscuela
+    ) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date fechaInicio = dateFormat.parse(fechaInicioStr);
+            Date fechaFinal = dateFormat.parse(fechaFinalStr);
+
+            return movimientoService.getReport(fechaInicio, fechaFinal,idEscuela);
+
+
+        } catch (ParseException e) {
+            // Manejo de excepción si la conversión de fecha falla
+            System.out.println("Error al convertir la fecha");
+            return ResponseEntity.ok().body(null);
+        }
+    }
+
 }
