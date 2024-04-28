@@ -11,10 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -53,9 +50,9 @@ public class MovimientoService {
 
     public ResponseEntity<GetMovimientoReq> getMovimiento(Long idMovimiento, Long idEscuela) {
         Movimiento mov = movimientoRepository.findByIdAndAndEscuelaId(idMovimiento, idEscuela);
-        if(mov == null) throw new MovimientoNotFoundException("Movimiento no encontrado");
+        if (mov == null) throw new MovimientoNotFoundException("Movimiento no encontrado");
         Movimiento movimiento = mov;
-        GetMovimientoReq  getMovReq = new GetMovimientoReq();
+        GetMovimientoReq getMovReq = new GetMovimientoReq();
 
         getMovReq.setMotivo(movimiento.getMotivo());
         getMovReq.setTipoMovimiento(movimiento.getTipoMovimiento());
@@ -70,8 +67,8 @@ public class MovimientoService {
 
     }
 
-    public ResponseEntity<List<GetMovimientoReq>> getMovimientos(Date fechaInicio, Date fechaFinal,Long idEscuela) {
-        List<Movimiento> movs = movimientoRepository.findByFechaBetweenAndEscuelaId(fechaInicio, fechaFinal,idEscuela);
+    public ResponseEntity<List<GetMovimientoReq>> getMovimientos(Date fechaInicio, Date fechaFinal, Long idEscuela) {
+        List<Movimiento> movs = movimientoRepository.findByFechaBetweenAndEscuelaId(fechaInicio, fechaFinal, idEscuela);
         List<GetMovimientoReq> getMovs = new ArrayList<>();
         for (Movimiento mov : movs) {
             GetMovimientoReq getMov = new GetMovimientoReq();
@@ -91,7 +88,7 @@ public class MovimientoService {
 
     //metodo para obtener los movimientos de ingresos y egresos de una escuela entre dos rangos de fechas
 
-    public ResponseEntity<GetReport> getReport(Date fechaInicio, Date fechaFinal,Long idEscuela) {
+    public ResponseEntity<GetReport> getReport(Date fechaInicio, Date fechaFinal, Long idEscuela) {
         List<Movimiento> movs = movimientoRepository.findByFechaBetweenAndEscuelaId(fechaInicio, fechaFinal, idEscuela);
         //obten los ingresos y egresos de esos movs
         double ingresos = 0;
@@ -115,6 +112,52 @@ public class MovimientoService {
         report.setLocalidad(esc.get().getLocalidad());
 
         return ResponseEntity.ok(report);
+    }
+
+
+//            clasificacion1{
+//                ingreso: 1000
+//                egreso: 100
+//            },
+//            clasificacion2{
+//                ingreso: 2000
+//                egreso: 200
+//              }
+//        }
+
+    public HashMap<String,Object> ingresosEgresosPorClasificacion(Date fechaInicio, Date fechaFinal, Long idEscuela){
+
+        // Obtener todos los movimientos dentro del periodo y de esa escuela
+        // Separar todos los que son egresos e ingresos
+        // Separar por clasificacion cada egreso e ingreso
+        // Totalizar por clasificacion cada egreso e ingreso   -- >
+
+        List<Movimiento> movs = movimientoRepository.findByFechaBetweenAndEscuelaId(fechaInicio, fechaFinal, idEscuela);
+        HashMap<String,Object> clasificaciones = new HashMap<>();
+
+        for (Movimiento mov : movs) {
+
+            if(clasificaciones.containsKey(mov.getClasificacion().getNombre())){
+                HashMap<String,Double> ingresosEgresos = (HashMap<String, Double>) clasificaciones.get(mov.getClasificacion().getNombre());
+                if(mov.getTipoMovimiento().equals(TipoDeMovimiento.INGRESO)){
+                    ingresosEgresos.put("ingreso",ingresosEgresos.get("ingreso")+mov.getImporte());
+                }else{
+                    ingresosEgresos.put("egreso",ingresosEgresos.get("egreso")+mov.getImporte());
+                }
+            }else{
+
+                HashMap<String,Double> ingresosEgresos = new HashMap<>();
+                if(mov.getTipoMovimiento().equals(TipoDeMovimiento.INGRESO)){
+                    ingresosEgresos.put("ingreso",mov.getImporte());
+                    ingresosEgresos.put("egreso",0.0);
+                }else{
+                    ingresosEgresos.put("ingreso",0.0);
+                    ingresosEgresos.put("egreso",mov.getImporte());
+                }
+                clasificaciones.put(mov.getClasificacion().getNombre(),ingresosEgresos);
+            }
+        }
+        return clasificaciones;
     }
 
 }

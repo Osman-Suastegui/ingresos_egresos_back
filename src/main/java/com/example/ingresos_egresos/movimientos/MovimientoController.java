@@ -66,6 +66,14 @@ public class MovimientoController {
             @RequestParam("fechaFinal") @DateTimeFormat(pattern = "yyyy-MM-dd") String fechaFinalStr,
             @RequestParam("idEscuela") Long idEscuela
     ) {
+
+
+//        {
+//            clasificacion1{
+//                ingreso: ""
+//                egreso: ""
+//            }
+//        }
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         try {
             Date fechaInicio = dateFormat.parse(fechaInicioStr);
@@ -75,6 +83,27 @@ public class MovimientoController {
 
 
         } catch (ParseException e) {
+            // Manejo de excepción si la conversión de fecha falla
+            System.out.println("Error al convertir la fecha");
+            return ResponseEntity.ok().body(null);
+        }
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/ingresosEgresosPorClasificacion")
+    public ResponseEntity<Object> ingresosEgresosPorClasificacion(
+            @RequestParam("fechaInicio") @DateTimeFormat(pattern = "yyyy-MM-dd") String fechaInicioStr,
+            @RequestParam("fechaFinal") @DateTimeFormat(pattern = "yyyy-MM-dd") String fechaFinalStr,
+            @RequestParam("idEscuela") Long idEscuela
+    ) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date fechaInicio = dateFormat.parse(fechaInicioStr);
+            Date fechaFinal = dateFormat.parse(fechaFinalStr);
+
+            return ResponseEntity.ok().body(movimientoService.ingresosEgresosPorClasificacion(fechaInicio, fechaFinal, idEscuela));
+        }
+        catch (ParseException e) {
             // Manejo de excepción si la conversión de fecha falla
             System.out.println("Error al convertir la fecha");
             return ResponseEntity.ok().body(null);
