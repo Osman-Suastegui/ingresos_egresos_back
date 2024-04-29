@@ -33,11 +33,21 @@ public class MovimientoService {
         Optional<Clasificacion> clas = clasificacionRepository.findById(movimientoReq.getIdClasificacion());
         mov.setClasificacion(clas.get());
         Optional<Escuela> esc = escuelaRepository.findById(movimientoReq.getIdEscuela());
-        mov.setEscuela(esc.get());
+        if(esc.isEmpty()) throw new MovimientoNotFoundException("Escuela no encontrada");
+        Escuela escuela = esc.get();
+        if(movimientoReq.getTipoMovimiento().equals(TipoDeMovimiento.EGRESO)) {
+
+            escuela.setBalance(escuela.getBalance() - movimientoReq.getImporte());
+        }else{
+            escuela.setBalance(escuela.getBalance() + movimientoReq.getImporte());
+        }
+
+        mov.setEscuela(escuela);
         Optional<User> user = userRepository.findById(movimientoReq.getIdUsuario());
         mov.setUser(user.get());
         mov.setPersona(movimientoReq.getPersona());
 
+        escuelaRepository.save(escuela);
         movimientoRepository.save(mov);
 
     }
