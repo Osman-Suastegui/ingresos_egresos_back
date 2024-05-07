@@ -2,9 +2,15 @@ package com.example.ingresos_egresos.Escuelas;
 
 import com.example.ingresos_egresos.users.User;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "asignacion_escuelas")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class AsignacionEscuela {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,5 +24,5 @@ public class AsignacionEscuela {
     @JoinColumn(name = "id_usuario")
     private User user;
 
-    // getters and setters
+
 }

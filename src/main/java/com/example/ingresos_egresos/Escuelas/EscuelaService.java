@@ -16,6 +16,7 @@ public class EscuelaService {
     private final EscuelaRepository escuelaRepository;
 
 
+
     public void addEscuela(AddEscuelaReq req) {
         Escuela esc  = new Escuela();
         esc.setBalance(0);
@@ -35,5 +36,9 @@ public class EscuelaService {
 
     public List<Escuela> getEscuelasByUserName(String username) {
         return escuelaRepository.findEscuelaByUsername(username);
+    }
+
+    public List<Escuela> getEscuelas() {
+        return escuelaRepository.findAll();
     }
 }

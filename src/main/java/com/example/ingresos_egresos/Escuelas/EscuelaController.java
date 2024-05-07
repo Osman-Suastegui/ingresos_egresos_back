@@ -15,6 +15,8 @@ public class EscuelaController {
 
     private final EscuelaService escuelaService;
 
+
+
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/addEscuela")
     public void addEscuela(@RequestBody AddEscuelaReq req) {
@@ -35,6 +37,13 @@ public class EscuelaController {
     @GetMapping("/getEscuelas")
     public ResponseEntity<List<Escuela>> getEscuelasByUserName(@RequestParam(name="username") String username){
         List<Escuela> esc = this.escuelaService.getEscuelasByUserName(username);
+        return ResponseEntity.ok(esc);
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/getAllEscuelas")
+    public ResponseEntity<List<Escuela>> getEscuelas(){
+        List<Escuela> esc = this.escuelaService.getEscuelas();
         return ResponseEntity.ok(esc);
     }
 
