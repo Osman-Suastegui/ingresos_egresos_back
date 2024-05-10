@@ -27,4 +27,12 @@ public class AsignacionEscuelaController {
             return this.asignacionEscuelaService.getAsignacionEscuelaByUserName(username);
         }
 
+
+        //eliminar una asignacion de escuela por id de la escuela y id del usuario
+        @CrossOrigin(origins = "http://localhost:4200")
+        @DeleteMapping("/deleteAsignacionEscuela")
+        public void deleteAsignacionEscuela(@RequestParam(name="idEscuela") Long idEscuela, @RequestParam(name="idUsuario") Long idUsuario){
+            this.asignacionEscuelaService.deleteAsignacionEscuela(idEscuela,idUsuario);
+        }
+
 }

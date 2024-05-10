@@ -2,6 +2,7 @@ package com.example.ingresos_egresos.Escuelas;
 
 
 import com.example.ingresos_egresos.users.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,4 +31,8 @@ public class AsignacionEscuelaService {
         return asignacionEscuelaRepository.findAsignacionEscuelaByIdUser(idUser);
     }
 
+    @Transactional
+    public void deleteAsignacionEscuela(Long idEscuela, Long idUsuario) {
+        asignacionEscuelaRepository.deleteAsignacionEscuelaByEscuelaAndUser(idEscuela,idUsuario);
+    }
 }
