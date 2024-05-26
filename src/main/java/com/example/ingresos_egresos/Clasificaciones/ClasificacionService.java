@@ -14,4 +14,9 @@ public class ClasificacionService {
     public List<Clasificacion> getClasificaciones(){
         return clasificacionRepository.findAll();
     }
+
+    public Clasificacion addClasificacion(Clasificacion clasificacion) {
+        return clasificacionRepository.save(clasificacion);
+
+    }
 }

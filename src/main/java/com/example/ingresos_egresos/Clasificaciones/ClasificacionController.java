@@ -18,4 +18,13 @@ public class ClasificacionController {
     public ResponseEntity<List<Clasificacion>> getClasificaciones(){
         return ResponseEntity.ok(clasificacionService.getClasificaciones());
     }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/addClasificacion")
+    public ResponseEntity<Clasificacion> addClasificacion(@RequestBody Clasificacion clasificacion){
+        return ResponseEntity.ok(clasificacionService.addClasificacion(clasificacion));
+    }
+
+
+
 }
