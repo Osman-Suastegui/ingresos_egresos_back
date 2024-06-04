@@ -13,12 +13,12 @@ import java.util.Map;
 public class AuthenticationController {
 
     private  final AuthenticationService usuarioService;
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "*")
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest req) {
         return usuarioService.authenticate(req);
     }
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "*")
     @PostMapping("/register")
 
     public ResponseEntity<AuthenticationResponse> register ( @RequestBody RegisterRequest req) {
