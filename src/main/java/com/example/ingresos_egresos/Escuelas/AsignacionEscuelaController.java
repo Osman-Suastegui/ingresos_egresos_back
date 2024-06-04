@@ -15,13 +15,13 @@ public class AsignacionEscuelaController {
 
         private final AsignacionEscuelaService asignacionEscuelaService;
 
-        @CrossOrigin(origins = "http://localhost:4200")
+        @CrossOrigin(origins = "*")
         @PostMapping("/addAsignacionEscuela")
         public void addAsignacionEscuela(@RequestBody AddAsignacionEscuelaReq req) {
             asignacionEscuelaService.addAsignacionEscuela(req);
         }
 
-        @CrossOrigin(origins = "http://localhost:4200")
+        @CrossOrigin(origins = "*")
         @GetMapping("/getAsignacionEscuela")
         public int getAsignacionEscuelaByUserName(@RequestParam(name="username") Long username){
             return this.asignacionEscuelaService.getAsignacionEscuelaByUserName(username);
@@ -29,7 +29,7 @@ public class AsignacionEscuelaController {
 
 
         //eliminar una asignacion de escuela por id de la escuela y id del usuario
-        @CrossOrigin(origins = "http://localhost:4200")
+        @CrossOrigin(origins = "*")
         @DeleteMapping("/deleteAsignacionEscuela")
         public void deleteAsignacionEscuela(@RequestParam(name="idEscuela") Long idEscuela, @RequestParam(name="idUsuario") Long idUsuario){
             this.asignacionEscuelaService.deleteAsignacionEscuela(idEscuela,idUsuario);
