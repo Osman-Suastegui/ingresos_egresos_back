@@ -40,7 +40,7 @@ public class EscuelaController {
         return ResponseEntity.ok(esc);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "*")
     @GetMapping("/getAllEscuelas")
     public ResponseEntity<List<Escuela>> getEscuelas(){
         List<Escuela> esc = this.escuelaService.getEscuelas();
