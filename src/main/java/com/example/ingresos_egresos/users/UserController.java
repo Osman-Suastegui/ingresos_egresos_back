@@ -18,7 +18,7 @@ public class UserController {
 
     private final UserService userService;
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "*")
     @GetMapping("/getUsuarios")
     public ResponseEntity<List<User>> getUsuarios(){
         List<User> usu = this.userService.getUsers();
