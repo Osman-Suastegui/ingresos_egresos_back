@@ -17,7 +17,7 @@ public class EscuelaController {
 
 
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "*")
     @PostMapping("/addEscuela")
     public void addEscuela(@RequestBody AddEscuelaReq req) {
         escuelaService.addEscuela(req);
@@ -25,14 +25,14 @@ public class EscuelaController {
 
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "*")
 
     @GetMapping("/getEscuela")
     public ResponseEntity<Escuela> getEscuela(@RequestParam(name="idEscuela") Long idEscuela){
         Escuela esc = escuelaService.getEscuela(idEscuela);
         return ResponseEntity.ok(esc);
     }
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "*")
 
     @GetMapping("/getEscuelas")
     public ResponseEntity<List<Escuela>> getEscuelasByUserName(@RequestParam(name="username") String username){
