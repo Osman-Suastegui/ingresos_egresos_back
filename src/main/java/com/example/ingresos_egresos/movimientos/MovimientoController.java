@@ -19,13 +19,13 @@ public class MovimientoController {
 
         private final MovimientoService movimientoService;
 
-        @CrossOrigin(origins = "http://localhost:4200")
+        @CrossOrigin(origins = "*")
         @PostMapping("/addMovimiento")
         public void addMovimiento(@Validated @RequestBody AddMovimientoReq movimiento) {
             System.out.println(movimiento);
             movimientoService.addMovimiento(movimiento);
         }
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "*")
 
     @GetMapping("/getMovimiento")
     public ResponseEntity<GetMovimientoReq> getMovimiento(@RequestParam("idMovimiento") Long idMovimiento,@RequestParam("idEscuela") Long idEscuela) {
@@ -34,7 +34,7 @@ public class MovimientoController {
 
 
 //   CONSULTA
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "*")
     @GetMapping("/getMovimientosByFechas")
     public ResponseEntity<List<GetMovimientoReq>> getMovimientos(
             @RequestParam("fechaInicio") @DateTimeFormat(pattern = "yyyy-MM-dd") String fechaInicioStr,
@@ -59,7 +59,7 @@ public class MovimientoController {
 
 
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "*")
     @GetMapping("/generateReport")
     public ResponseEntity<GetReport> getReport(
             @RequestParam("fechaInicio") @DateTimeFormat(pattern = "yyyy-MM-dd") String fechaInicioStr,
@@ -89,7 +89,7 @@ public class MovimientoController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "*")
     @GetMapping("/ingresosEgresosPorClasificacion")
     public ResponseEntity<Object> ingresosEgresosPorClasificacion(
             @RequestParam("fechaInicio") @DateTimeFormat(pattern = "yyyy-MM-dd") String fechaInicioStr,
