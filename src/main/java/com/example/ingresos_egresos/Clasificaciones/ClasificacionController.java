@@ -13,13 +13,13 @@ public class ClasificacionController {
 
     private final ClasificacionService clasificacionService;
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "*")
     @GetMapping("/getClasificaciones")
     public ResponseEntity<List<Clasificacion>> getClasificaciones(){
         return ResponseEntity.ok(clasificacionService.getClasificaciones());
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "*")
     @PostMapping("/addClasificacion")
     public ResponseEntity<Clasificacion> addClasificacion(@RequestBody Clasificacion clasificacion){
         return ResponseEntity.ok(clasificacionService.addClasificacion(clasificacion));
